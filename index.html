@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>W1ndy Checkers</title>
     <style>
+        /* ------ тёплая классика (без лишних стикеров) ------ */
         * {
             margin: 0;
             padding: 0;
@@ -24,6 +25,7 @@
             transition: background-color 0.3s ease;
         }
 
+        /* легкий снежок (чисто фон) */
         body::before {
             content: '';
             position: fixed;
@@ -78,6 +80,8 @@
         .settings-btn {
             background: #c52b2b;
             border: none;
+            color: #ffecb3;
+            font-size: 2.2rem;
             width: 80px;
             height: 80px;
             border-radius: 50%;
@@ -92,11 +96,6 @@
         .settings-btn:active {
             transform: translateY(6px);
             box-shadow: inset 0 -2px 0 #771e1e, 0 4px 0 #3d1e1e;
-        }
-        .settings-btn img {
-            width: 40px;
-            height: 40px;
-            filter: brightness(0) invert(1);
         }
 
         .play-area {
@@ -253,6 +252,7 @@
             font-weight: 700;
         }
 
+        /* модальное окно настроек (С КАНАЛОМ) */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -272,7 +272,7 @@
         }
         .settings-modal {
             background: #2f241d;
-            width: 500px;
+            width: 450px;
             border-radius: 80px;
             padding: 40px 35px;
             border: 4px solid #d4a85f;
@@ -288,32 +288,15 @@
         }
         .setting-item {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 15px;
             margin-bottom: 30px;
             color: #f1d9c0;
             font-size: 1.6rem;
             font-weight: 600;
         }
-        .setting-icon {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .setting-icon img {
-            width: 32px;
-            height: 32px;
-            filter: brightness(0) invert(0.8);
-        }
-        .setting-label {
-            min-width: 120px;
-            color: #f1d9c0;
-            font-size: 1.4rem;
-        }
         .setting-item input[type="range"] {
-            flex: 1;
+            width: 200px;
             height: 12px;
             background: #4d3b2d;
             border-radius: 20px;
@@ -346,11 +329,10 @@
             transform: translateY(5px);
             box-shadow: inset 0 -1px 0 #771e1e, 0 2px 0 #3d1e1e;
         }
+        /* кнопка канала (стилизованная) */
         .channel-link {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            display: block;
+            text-align: center;
             background: #4d3b2d;
             color: #fae1cb;
             text-decoration: none;
@@ -362,11 +344,6 @@
             transition: 0.1s;
             font-weight: 600;
         }
-        .channel-link img {
-            width: 32px;
-            height: 32px;
-            filter: brightness(0) invert(0.8);
-        }
         .channel-link:active {
             transform: scale(0.97);
         }
@@ -374,21 +351,21 @@
 </head>
 <body>
     <div class="game-window" id="gameWindow">
+        <!-- шапка -->
         <div class="top-bar">
             <div class="title-block">
                 <div class="main-title">W1ndy Checkers</div>
             </div>
-            <button class="settings-btn" id="settingsBtn">
-                <!-- ИЗМЕНЕНО: settings-icon.svg → settings.png -->
-                <img src="icons/settings.png" alt="settings">
-            </button>
+            <button class="settings-btn" id="settingsBtn">⚙️</button>
         </div>
 
+        <!-- игровое поле + панель -->
         <div class="play-area">
             <div class="board-wrapper">
                 <div id="checkerBoard" class="board"></div>
             </div>
 
+            <!-- панель управления (только победы) -->
             <div class="control-panel">
                 <div class="game-controls">
                     <h2>Управление игрой</h2>
@@ -400,6 +377,7 @@
                     </div>
                 </div>
                 
+                <!-- ТОЛЬКО ПОБЕДЫ -->
                 <div class="stats-section">
                     <h2>Победы</h2>
                     <div class="stats-cards">
@@ -417,101 +395,115 @@
         </div>
     </div>
 
-    <!-- Модальное окно настроек с ВАШИМИ PNG -->
+    <!-- модальное окно настроек (С КНОПКОЙ КАНАЛА) -->
     <div class="modal-overlay" id="settingsModal">
         <div class="settings-modal">
             <h2>Настройки</h2>
-            
-            <!-- Звук - ИЗМЕНЕНО: sound-icon.svg → sound-icon.png -->
             <div class="setting-item">
-                <span class="setting-icon">
-                    <img src="icons/sound-icon.png" alt="sound">
-                </span>
-                <span class="setting-label">Громкость</span>
+                <span>🔊 Звук</span>
                 <input type="range" min="0" max="100" value="70" id="soundRange">
             </div>
-
-            <!-- Яркость - ИЗМЕНЕНО: brightness-icon.svg → brightness-icon.png -->
             <div class="setting-item">
-                <span class="setting-icon">
-                    <img src="icons/brightness-icon.png" alt="brightness">
-                </span>
-                <span class="setting-label">Яркость</span>
+                <span>☀️ Яркость</span>
                 <input type="range" min="30" max="100" value="90" id="brightnessRange">
             </div>
-
-            <!-- Анимация - у вас нет такого файла, поэтому оставляем эмодзи ✨ -->
             <div class="setting-item">
-                <span class="setting-icon">✨</span>
-                <span class="setting-label">Анимация</span>
+                <span>✨ Анимация</span>
                 <input type="range" min="0" max="100" value="100" id="animationRange">
             </div>
-
-            <!-- Канал - ИЗМЕНЕНО: channel-icon.svg → channel-icon.png -->
-            <a class="channel-link" href="https://t.me/checkersbyw1ndy" target="_blank">
-                <img src="icons/channel-icon.png" alt="channel">
-                <span>Наш канал</span>
-            </a>
-
+            <!-- КНОПКА КАНАЛА ВОЗВРАЩЕНА -->
+            <a class="channel-link" href="https://t.me/checkersbyw1ndy" target="_blank">📢 Наш канал</a>
             <button class="close-modal" id="closeSettingsBtn">Закрыть</button>
         </div>
     </div>
 
-    <!-- Аудио (пути не меняются, нужны ваши MP3) -->
-    <audio id="moveSound" preload="auto" style="display:none">
-        <source src="sounds/move.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="captureSound" preload="auto" style="display:none">
-        <source src="sounds/capture.mp3" type="audio/mpeg">
-    </audio>
+    <!-- аудио для фоновой музыки (скрытый) -->
     <audio id="bgMusic" loop preload="auto" style="display:none">
-        <source src="sounds/background.mp3" type="audio/mpeg">
+        <source src="https://downloader.disk.yandex.ru/disk/279b4fb29c55c0d72f35b584ee1e3eb3f54cc757f82fd9bcf5e7a746ab8aae7c/67a9ff8a/uv2PcJsqy54tCiNZmPj5WZx_HXx1fHZwnet2P_NET1g_I2m1R_iMsK-TsPprwnaRGWcI0BzeVyQp3xZzR8TlPA%3D%3D?uid=0&filename=ikson-christmas.mp3&disposition=attachment&hash=Gf46MlXIdPZ6D/2sKv9p8/KvW5yMqmQZytE5t%2Bc%2BgD4%3D&limit=0&content_type=audio%2Fmpeg&owner_uid=158259204&fsize=4194331&hid=96d3a1228966d144f8a15e2fbf31d02b&media_type=audio&tknv=v2" type="audio/mpeg">
     </audio>
 
     <script>
         (function() {
+            // ---------- Состояние игры ----------
             const boardEl = document.getElementById('checkerBoard');
             const whiteSpan = document.getElementById('whiteScoreDisplay');
             const blackSpan = document.getElementById('blackScoreDisplay');
 
             let board = [];
-            let currentPlayer = 1;
+            let currentPlayer = 1;       // 1 белые, 2 чёрные
             let selectedRow = -1, selectedCol = -1;
-            let possibleTargets = [];
+            let possibleTargets = [];    // { row, col, captureRow, captureCol }
             
             let whiteWins = 0, blackWins = 0;
             let historyStack = [];
 
-            // Аудио элементы
-            const moveSound = document.getElementById('moveSound');
-            const captureSound = document.getElementById('captureSound');
-            const bgMusic = document.getElementById('bgMusic');
-            
-            // Настройки звука
+            // ---------- Аудио ----------
+            let audioCtx = null;
+            let soundEnabled = true;
             let soundVolume = 0.7;
-            moveSound.volume = soundVolume;
-            captureSound.volume = soundVolume;
-            bgMusic.volume = 0.3;
 
-            // Функции воспроизведения
+            // фоновый плеер
+            const bgMusic = document.getElementById('bgMusic');
+            bgMusic.volume = 0.3; // комфортная громкость
+
+            function initAudio() {
+                if (audioCtx) return;
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+
+            // звук ходьбы (короткий "клик")
             function playMoveSound() {
-                moveSound.currentTime = 0;
-                moveSound.play().catch(e => console.log('move sound error'));
+                if (!soundEnabled || !audioCtx) return;
+                
+                const now = audioCtx.currentTime;
+                const osc = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                
+                osc.type = 'sine';
+                osc.frequency.value = 800;
+                
+                gainNode.gain.setValueAtTime(0.08 * soundVolume, now);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+                
+                osc.connect(gainNode).connect(audioCtx.destination);
+                osc.start(now);
+                osc.stop(now + 0.08);
             }
 
             function playCaptureSound() {
-                captureSound.currentTime = 0;
-                captureSound.play().catch(e => console.log('capture sound error'));
+                if (!soundEnabled || !audioCtx) return;
+                
+                const now = audioCtx.currentTime;
+                const osc1 = audioCtx.createOscillator();
+                const osc2 = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                
+                osc1.type = 'triangle';
+                osc1.frequency.value = 400;
+                osc2.type = 'triangle';
+                osc2.frequency.value = 300;
+                
+                gainNode.gain.setValueAtTime(0.12 * soundVolume, now);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
+                
+                osc1.connect(gainNode);
+                osc2.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                
+                osc1.start(now);
+                osc2.start(now);
+                osc1.stop(now + 0.15);
+                osc2.stop(now + 0.15);
             }
 
-            // Начальная расстановка
+            // ---------- Начальная расстановка ----------
             function createInitialBoard() {
                 const newBoard = Array(8).fill().map(() => Array(8).fill(0));
                 for (let r = 0; r < 8; r++) {
                     for (let c = 0; c < 8; c++) {
                         if ((r + c) % 2 === 1) {
-                            if (r < 3) newBoard[r][c] = 2;
-                            else if (r > 4) newBoard[r][c] = 1;
+                            if (r < 3) newBoard[r][c] = 2;        // чёрные сверху
+                            else if (r > 4) newBoard[r][c] = 1;   // белые снизу
                         }
                     }
                 }
@@ -535,6 +527,7 @@
                 renderBoard();
             }
 
+            // ---------- Ходы (все возможные) ----------
             function getCaptureMoves(row, col, player) {
                 const moves = [];
                 const opponent = player === 1 ? 2 : 1;
@@ -585,6 +578,7 @@
                 return 0;
             }
 
+            // ---------- Клик со звуками ----------
             function handleBoardClick(row, col) {
                 const winner = getWinner();
                 if (winner !== 0) return;
@@ -714,12 +708,13 @@
                 }
             }
 
+            // ---------- Привязка кнопок ----------
             document.getElementById('startGameBtn').addEventListener('click', newGame);
             document.getElementById('resetBoardBtn').addEventListener('click', restartGame);
             document.getElementById('hintBtn').addEventListener('click', showHint);
             document.getElementById('undoBtn').addEventListener('click', undoLast);
 
-            // Модальное окно
+            // ---------- Модальное окно настроек ----------
             const modal = document.getElementById('settingsModal');
             const settingsBtn = document.getElementById('settingsBtn');
             const closeBtn = document.getElementById('closeSettingsBtn');
@@ -738,24 +733,24 @@
                 }
             });
 
-            // Ползунки
+            // ---------- Ползунки ----------
             const soundRange = document.getElementById('soundRange');
             const brightnessRange = document.getElementById('brightnessRange');
             const animationRange = document.getElementById('animationRange');
             const gameWindow = document.getElementById('gameWindow');
 
-            // Запуск музыки
-            function startMusic() {
+            // Запуск аудиоконтекста и музыки по первому взаимодействию
+            function startAllAudio() {
+                initAudio();
                 bgMusic.play().catch(e => console.log('music play delayed'));
-                document.removeEventListener('click', startMusic);
+                document.removeEventListener('click', startAllAudio);
             }
-            document.addEventListener('click', startMusic, { once: true });
+            document.addEventListener('click', startAllAudio, { once: true });
 
             soundRange.addEventListener('input', (e) => {
                 const val = parseInt(e.target.value) / 100;
-                moveSound.volume = val;
-                captureSound.volume = val;
-                bgMusic.volume = val * 0.3;
+                soundVolume = val;
+                soundEnabled = val > 0;
             });
 
             brightnessRange.addEventListener('input', (e) => {
@@ -772,6 +767,7 @@
                 });
             });
 
+            // Инициализация доски
             board = createInitialBoard();
             renderBoard();
             whiteSpan.innerText = whiteWins;
